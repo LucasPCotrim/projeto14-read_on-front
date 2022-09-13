@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import GlobalStyle from './global/GlobalStyle';
 
-function App() {
+export default function App() {
   return (
     <>
+      <GlobalStyle />
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<h1>LoginPage</h1>} />
@@ -15,6 +17,4 @@ function App() {
     </>
   );
 }
-
-export default App;
 
