@@ -138,6 +138,15 @@ const Global = css`
 const GlobalStyle = createGlobalStyle`
   ${Reset};
   ${Global};
+
+  body {
+    --primary-color: #F9F7F7;
+    --secundary-color: #DBE2EF;
+    --tertiary-color: #3F72AF;
+    --quaternary-color: #112D4E;
+
+    background-color: var(--primary-color);
+  }
 `;
 
 export default GlobalStyle;
