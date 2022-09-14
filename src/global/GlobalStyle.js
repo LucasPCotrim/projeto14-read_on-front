@@ -133,20 +133,23 @@ const Global = css`
     border: 0;
     padding: 0;
   }
+  body {
+    --primary-color: #f9f7f7;
+    --secundary-color: #dbe2ef;
+    --tertiary-color: #3f72af;
+    --quaternary-color: #112d4e;
+    /* https://colorhunt.co/palette/f9f7f7dbe2ef3f72af112d4e */
+
+    background-color: var(--secundary-color);
+    color: var(--quaternary-color);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+  }
 `;
 
 const GlobalStyle = createGlobalStyle`
   ${Reset};
   ${Global};
-
-  body {
-    --primary-color: #F9F7F7;
-    --secundary-color: #DBE2EF;
-    --tertiary-color: #3F72AF;
-    --quaternary-color: #112D4E;
-
-    background-color: var(--primary-color);
-  }
 `;
 
 export default GlobalStyle;
