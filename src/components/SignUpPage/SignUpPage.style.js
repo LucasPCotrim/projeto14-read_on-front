@@ -73,6 +73,13 @@ export const SignUpFormStyle = styled.form`
       line-height: 23px;
       color: var(--primary-color);
     }
+    &:disabled {
+      background-color: var(--primary-color);
+      cursor: initial;
+      h2 {
+        color: var(--tertiary-color);
+      }
+    }
   }
 
   .categories-container {
