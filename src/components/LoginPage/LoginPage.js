@@ -1,10 +1,12 @@
 import { LoginPageStyle, LoginFormStyle } from './LoginPage.style';
 import logoUnderline from '../../assets/imgs/logoUnderline.svg';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../../services/readOnService';
+import { login, setToken, getToken } from '../../services/readOnService';
+import UserContext from './contexts/UserContext';
 
 export default function LoginPage() {
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: '',
@@ -27,8 +29,11 @@ export default function LoginPage() {
     event.preventDefault();
     const promise = login(form);
     promise
-      .then(() => {
+      .then((res) => {
+        console.log(res);
+        setToken(res.data.token, user, setUser);
         clearForm();
+        console.log(getToken());
         navigate('/');
       })
       .catch((res) => {
