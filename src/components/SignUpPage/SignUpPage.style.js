@@ -23,6 +23,17 @@ export const SignUpPageStyle = styled.div`
       width: calc(4 * min(max(calc(0.0648 * 100vw), 60px), 95px));
     }
   }
+  .login-link {
+    h2 {
+      font-size: 20px;
+      line-height: 30px;
+      text-decoration: underline;
+      color: var(--tertiary-color);
+    }
+  }
+  a {
+    text-decoration: none;
+  }
 `;
 
 export const SignUpFormStyle = styled.form`

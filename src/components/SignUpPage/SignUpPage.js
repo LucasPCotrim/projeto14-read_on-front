@@ -2,11 +2,11 @@ import { SignUpPageStyle, SignUpFormStyle } from './SignUpPage.style';
 import logoUnderline from '../../assets/imgs/logoUnderline.svg';
 import { useState } from 'react';
 import { signUp } from '../../services/readOnService';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const GENRES = [
   'Fantasia',
-  'Ficcção Cinetífica',
+  'Ficcção Científica',
   'Ação e Aventura',
   'Romance',
   'Suspense',
@@ -136,6 +136,11 @@ export default function SignUpPage() {
             <h2>Cadastrar</h2>
           </button>
         </SignUpFormStyle>
+        <Link to='/'>
+          <div className='login-link'>
+            <h2>Já possuí cadastro? Entre!</h2>
+          </div>
+        </Link>
       </SignUpPageStyle>
     </>
   );
