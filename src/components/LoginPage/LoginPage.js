@@ -2,8 +2,8 @@ import { LoginPageStyle, LoginFormStyle } from './LoginPage.style';
 import logoUnderline from '../../assets/imgs/logoUnderline.svg';
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login, setToken, getToken } from '../../services/readOnService';
-import UserContext from './contexts/UserContext';
+import { login, setToken } from '../../services/readOnService';
+import UserContext from '../../contexts/UserContext';
 
 export default function LoginPage() {
   const { user, setUser } = useContext(UserContext);
@@ -30,10 +30,9 @@ export default function LoginPage() {
     const promise = login(form);
     promise
       .then((res) => {
-        console.log(res);
         setToken(res.data.token, user, setUser);
+        setUser({ ...user, name: res.data.user.name, email: res.data.user.email });
         clearForm();
-        console.log(getToken());
         navigate('/');
       })
       .catch((res) => {
