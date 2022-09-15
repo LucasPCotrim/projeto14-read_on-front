@@ -33,6 +33,11 @@ export const SignUpFormStyle = styled.form`
   justify-content: flex-start;
   gap: 18px;
   margin-bottom: 32px;
+  > h1 {
+    width: 100%;
+    font-size: 25px;
+    line-height: 30px;
+  }
   > input {
     width: 100%;
     height: 58px;
@@ -110,6 +115,7 @@ export const SignUpFormStyle = styled.form`
         justify-content: center;
         align-items: center;
         border-radius: 5px;
+        box-shadow: 1px 1px 3px 0.5px rgba(17, 45, 78, 0.5);
         font-size: 18px;
         line-height: 25px;
         color: var(--tertiary-color);

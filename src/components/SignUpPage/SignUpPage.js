@@ -1,6 +1,8 @@
 import { SignUpPageStyle, SignUpFormStyle } from './SignUpPage.style';
 import logoUnderline from '../../assets/imgs/logoUnderline.svg';
 import { useState } from 'react';
+import { signUp } from '../../services/readOnService';
+import { useNavigate } from 'react-router-dom';
 
 const GENRES = [
   'Fantasia',
@@ -20,6 +22,7 @@ const GENRES = [
 ];
 
 export default function SignUpPage() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -55,15 +58,25 @@ export default function SignUpPage() {
   };
   const executeSignUp = (event) => {
     event.preventDefault();
-    console.log(form);
-    clearForm();
+    const promise = signUp(form);
+    promise
+      .then(() => {
+        clearForm();
+        navigate('/');
+      })
+      .catch((res) => {
+        alert(res.response?.data?.message || 'Error when connecting to the database');
+        clearForm();
+      });
   };
+
   const disableButton =
     form.name === '' ||
     form.email === '' ||
     form.password === '' ||
     form.passwordConfirm === '' ||
     form.password !== form.passwordConfirm;
+
   return (
     <>
       <SignUpPageStyle>
@@ -72,6 +85,7 @@ export default function SignUpPage() {
           <img src={logoUnderline} alt='logoUnderline' />
         </div>
         <SignUpFormStyle onSubmit={executeSignUp}>
+          <h1>Cadastre-se</h1>
           <input
             type='text'
             name='name'
