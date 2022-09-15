@@ -2,19 +2,25 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:5000';
 
-function setToken(token, setUser) {
+function setToken(token, user, setUser) {
   localStorage.setItem('readOn', JSON.stringify({ token }));
-  setUser({ token });
+  setUser({ ...user, token });
 }
 
 function getToken() {
   const auth = JSON.parse(localStorage.getItem('readOn'));
-  if (!auth) {
-    return false;
+
+  return auth?.token;
+}
+
+function getConfig() {
+  const token = getToken();
+  if (!token) {
+    return undefined;
   }
   const config = {
     headers: {
-      Authorization: `Bearer ${auth.token}`,
+      Authorization: `Bearer ${token}`,
     },
   };
 
@@ -27,7 +33,7 @@ function signUp(body) {
 }
 
 function login(body) {
-  const promise = axios.post(`${BASE_URL}/sign-in`, body);
+  const promise = axios.post(`${BASE_URL}/login`, body);
   return promise;
 }
 
