@@ -24,7 +24,6 @@ const BookBox = styled.div`
     width: 180px;
     height: 240px;
     border-radius: 5px;
-    background-color: azure;
 
     margin: 4px 6px;
     padding: 4px 4px;
