@@ -33,7 +33,7 @@ export default function LoginPage() {
         setToken(res.data.token, user, setUser);
         setUser({ ...user, name: res.data.user.name, email: res.data.user.email });
         clearForm();
-        navigate('/');
+        navigate('/main');
       })
       .catch((res) => {
         alert(res.response?.data?.message || 'Error when connecting to the database');
