@@ -9,6 +9,7 @@ function setToken(token, user, setUser) {
 
 function getToken() {
   const auth = JSON.parse(localStorage.getItem('readOn'));
+
   return auth?.token;
 }
 
@@ -99,4 +100,4 @@ function getProducts() {
   };
 }
 
-export { signUp, setToken, getToken, getConfig, login, getProducts };
+export { signUp, setToken, getToken, login, getProducts };
