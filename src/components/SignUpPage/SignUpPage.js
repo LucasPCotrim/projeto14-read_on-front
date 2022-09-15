@@ -25,7 +25,7 @@ export default function SignUpPage() {
     email: '',
     password: '',
     passwordConfirm: '',
-    genres: [],
+    favGenres: [],
   });
   const handleForm = (event) => {
     setForm({
@@ -35,14 +35,14 @@ export default function SignUpPage() {
   };
   const handleCheckboxChange = (event, index) => {
     let checked = event.target.checked;
-    const genres = [...form.genres];
+    const genres = [...form.favGenres];
     let genresNew;
     if (checked) {
       genresNew = genres.includes(GENRES[index]) ? [...genres] : [...genres, GENRES[index]];
     } else {
       genresNew = genres.filter((e) => e !== GENRES[index]);
     }
-    setForm({ ...form, genres: genresNew });
+    setForm({ ...form, favGenres: genresNew });
   };
   const clearForm = () => {
     setForm({
@@ -50,7 +50,7 @@ export default function SignUpPage() {
       email: '',
       password: '',
       passwordConfirm: '',
-      genres: [],
+      favGenres: [],
     });
   };
   const executeSignUp = (event) => {
@@ -109,7 +109,7 @@ export default function SignUpPage() {
                     <input
                       type='checkbox'
                       onChange={(event) => handleCheckboxChange(event, index)}
-                      checked={form.genres.includes(GENRES[index])}
+                      checked={form.favGenres.includes(GENRES[index])}
                     />
                     <span>{genre}</span>
                   </label>
