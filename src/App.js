@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
 import GlobalStyle from './global/GlobalStyle';
 import UserContext from './contexts/UserContext';
 import Products from './components/ProductsPage/Products.js';
