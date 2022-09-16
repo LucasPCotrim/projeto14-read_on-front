@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000';
+const BASE_URL = 'https://back-end-readon.herokuapp.com';
 
 function setToken(token, user, setUser) {
   localStorage.setItem('readOn', JSON.stringify({ token }));
@@ -42,4 +42,4 @@ function getProducts() {
   return promise;
 }
 
-export { signUp, setToken, getToken, login, getProducts };
+export { signUp, setToken, getToken, getConfig, login, getProducts };
