@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import GlobalStyle from './global/GlobalStyle';
 import UserContext from './contexts/UserContext';
+import SignUpPage from './components/SignUpPage/SignUpPage';
 import LoginPage from './components/LoginPage/LoginPage';
 
 export default function App() {
@@ -14,7 +15,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<LoginPage />} />
-            <Route path='/sign-up' element={<h1>SignUpPage</h1>} />
+            <Route path='/sign-up' element={<SignUpPage />} />
             <Route path='/main' element={<h1>MainPage</h1>} />
             <Route path='/cart' element={<h1>CartPage</h1>} />
             <Route path='/checkout' element={<h1>CheckoutPage</h1>} />
