@@ -8,20 +8,17 @@ import ProductsMenu from './ProductsMenu';
 export default function Products() {
     const [listProducts, setListProducts] = useState([]);
     /* const {user, setUser} = useContext(UserContext); */
-    /* const [render, serRender] = useState(false); */
+    const [render, serRender] = useState(false);
 
-    /* useEffect(() => {
+    useEffect(() => {
         const promise = getProducts();
         promise
             .then(res => { 
                 setListProducts(res.data);
-                setUser(res.data);})
+                console.log(res);
+              /*   setUser(res.data); */})
             .catch(res => console.log(res))
-    }, [render]); */
-    
-    useEffect(() => {
-        setListProducts(getProducts().data);    
-    }, []);
+    }, [render]);
 
     return (
         <>
