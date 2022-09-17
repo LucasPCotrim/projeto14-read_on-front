@@ -54,9 +54,6 @@ export const TopMenuStyle = styled.div`
       display: none;
     }
   }
-  .cart-menu {
-    animation: fadeInAnimation 1s forwards;
-  }
   .background-shadow {
     position: absolute;
     left: 0;
@@ -74,6 +71,9 @@ export const TopMenuStyle = styled.div`
     padding: 20px;
     border-radius: 15px;
     background-color: var(--quaternary-color);
+    animation-name: ${fadeInAnimation};
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
     > .cart-summary {
       max-height: 50vh;
       display: flex;
