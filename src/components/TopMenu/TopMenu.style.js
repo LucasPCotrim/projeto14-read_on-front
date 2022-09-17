@@ -6,6 +6,7 @@ const fadeInAnimation = keyframes`
 `;
 
 export const TopMenuStyle = styled.div`
+  z-index: 1;
   background-color: var(--quaternary-color);
   position: fixed;
   top: 0;
