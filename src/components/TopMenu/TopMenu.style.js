@@ -98,6 +98,9 @@ export const TopMenuStyle = styled.div`
           object-fit: cover;
           margin-right: 15px;
         }
+        .product-amount {
+          margin-right: 15px;
+        }
         .product-name {
           margin-right: 40px;
         }
