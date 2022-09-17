@@ -145,6 +145,7 @@ const Global = css`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    overflow: hidden;
     background-color: var(--secundary-color);
     color: var(--quaternary-color);
     font-family: 'Roboto', sans-serif;
