@@ -4,7 +4,7 @@ import GlobalStyle from './global/GlobalStyle';
 import UserContext from './contexts/UserContext';
 import SignUpPage from './components/SignUpPage/SignUpPage';
 import LoginPage from './components/LoginPage/LoginPage';
-import TopMenu from './components/TopMenu/TopMenu';
+import PrivatePage from './components/PrivatePage/PrivatePage';
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -19,10 +19,9 @@ export default function App() {
             <Route
               path='/main'
               element={
-                <>
-                  <TopMenu />
+                <PrivatePage>
                   <h1>MainPage</h1>
-                </>
+                </PrivatePage>
               }
             />
             <Route path='/cart' element={<h1>CartPage</h1>} />

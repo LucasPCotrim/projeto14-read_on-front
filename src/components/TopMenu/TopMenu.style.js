@@ -1,4 +1,9 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const fadeInAnimation = keyframes`
+  0% { opacity: 0; transform: translateY(-40px); }
+  100% { opacity: 1; transform: translateY(0px); }
+`;
 
 export const TopMenuStyle = styled.div`
   background-color: var(--quaternary-color);
@@ -49,42 +54,148 @@ export const TopMenuStyle = styled.div`
       display: none;
     }
   }
-  .icons-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    .shopping-cart-container {
-      cursor: pointer;
-      background: var(--quaternary-color);
-      border-radius: 8px;
-      padding: 15px;
-      &:hover {
-        background-color: var(--quaternary-color-alt);
-        #icon {
-          transform: scale(1.1);
-        }
+  .cart-menu {
+    animation: fadeInAnimation 1s forwards;
+  }
+  .background-shadow {
+    position: absolute;
+    left: 0;
+    top: 75px;
+    width: 100vw;
+    height: calc(100vh - 75px);
+    background-color: #00000058;
+  }
+  .cart-menu-container {
+    position: absolute;
+    top: 85px;
+    right: 10px;
+    width: 50vw;
+    max-height: 70vh;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: var(--quaternary-color);
+    > .cart-summary {
+      max-height: 50vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 10px;
+      color: var(--primary-color);
+      margin-bottom: 30px;
+      overflow: scroll;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
       }
-      #icon {
-        font-size: 25px;
-        color: var(--primary-color);
-        transition: transform 0.3s;
+      > .product {
+        display: flex;
+        align-items: center;
+        img {
+          border-radius: 5px;
+          width: 60px;
+          height: 50px;
+          object-fit: cover;
+          margin-right: 15px;
+        }
+        .product-name {
+          margin-right: 40px;
+        }
       }
     }
-    .user-profile-container {
-      cursor: pointer;
-      background: var(--quaternary-color);
-      border-radius: 8px;
-      padding: 15px;
-      #icon {
-        font-size: 25px;
-        color: var(--primary-color);
-        transition: transform 0.3s;
-      }
-      &:hover {
-        background-color: var(--quaternary-color-alt);
-        #icon {
-          transform: scale(1.1);
+    > .buttons-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 30px;
+      > button {
+        padding: 2px 25px;
+        height: 40px;
+        background-color: var(--tertiary-color);
+        &:nth-child(2) {
+          background-color: green;
         }
+        border: none;
+        border-radius: 8px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        h2 {
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 23px;
+          color: var(--primary-color);
+        }
+      }
+    }
+    #icon {
+      position: absolute;
+      top: 5px;
+      right: 12px;
+      font-size: 35px;
+      color: #979797;
+      cursor: pointer;
+    }
+  }
+`;
+
+export const IconsContainerStyle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  .shopping-cart-container {
+    position: relative;
+    background: var(--quaternary-color);
+    border-radius: 8px;
+    padding: 15px;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--quaternary-color-alt);
+      #icon,
+      .cart-count {
+        transform: scale(1.1);
+      }
+    }
+    #icon {
+      font-size: 30px;
+      color: var(--primary-color);
+      transition: transform 0.3s;
+    }
+    .cart-count {
+      position: absolute;
+      bottom: 15%;
+      right: 15%;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      border: var(--quaternary-color) 1px solid;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: var(--quaternary-color);
+      transition: transform 0.3s;
+    }
+  }
+  .user-profile-container {
+    cursor: pointer;
+    background: var(--quaternary-color);
+    border-radius: 8px;
+    padding: 15px;
+    #icon {
+      font-size: 30px;
+      color: var(--primary-color);
+      transition: transform 0.3s;
+    }
+    &:hover {
+      background-color: var(--quaternary-color-alt);
+      #icon {
+        transform: scale(1.1);
       }
     }
   }
