@@ -24,8 +24,11 @@ export default function Products() {
         <>
             {listProducts.length > 0 ? 
                 <>
-                <ProductsMenu/>
                 <ProductsContainer>
+                    {listProducts.map((book, index) => 
+                        <ProductsBox key={index} {...book}>
+                        </ProductsBox>)}
+                        <ProductsMenu />
                     {listProducts.map((book, index) => 
                         <ProductsBox key={index} {...book}>
                         </ProductsBox>)}

@@ -6,7 +6,7 @@ import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import UserContext from '../../contexts/UserContext';
 
-export default function ProductsBox ({
+function PrincipalBanner ({
     _id,
     title,
     subTitulo='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
@@ -38,6 +38,56 @@ export default function ProductsBox ({
                     <FontAwesomeIcon id='icon' icon={faAdd} />
                 </ButtonCart>
         </BookBox>);
+}
+
+function RenderBanner ({
+    _id,
+    title,
+    subTitulo='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    image,
+    autor,
+    price,
+    amount,
+    genre='Police',
+    }) {
+
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    function addCart (idProduct) {
+        alert(idProduct)
+        /* setCart() */
+    }
+
+    return(
+        <BookBox>
+            <ImageBook src={image} alt={title}/>
+            <h1>{title}</h1>
+            <h2>{subTitulo}</h2>
+            <h3><h2>{genre}</h2>{amount > 0 ? <>{amount} un</> : <p>indisponível</p>}</h3>
+            <Price>
+                <p>R$ {price}</p>
+            </Price>
+            <ButtonCart onClick={()=> addCart(_id)}>
+                    <FontAwesomeIcon id='icon' icon={faAdd} />
+                </ButtonCart>
+        </BookBox>);
+}
+
+export default function ProductsBaner (listProducts){
+
+    
+
+    return (
+        <>
+            {listProducts.length > 0 ? 
+                <>
+                    {listProducts.map((book, index) => 
+                        <RenderBanner key={index} {...book}>
+                        </RenderBanner>)}
+                </> 
+            : 'Livro > Filme.'}
+        </>);
 }
 
 const BookBox = styled.div`

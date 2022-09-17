@@ -12,9 +12,8 @@ export default function ProductsContainer({
 
 const Box = styled.div`
     width: 100vw;
-    height: calc(100vh - 160px);
+    height: calc(100vh - 75px);
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
+    padding: 75px 42px;
 `;

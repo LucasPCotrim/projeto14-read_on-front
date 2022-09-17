@@ -5,7 +5,6 @@ import UserContext from './contexts/UserContext';
 import Products from './components/ProductsPage/Products.js';
 import SignUpPage from './components/SignUpPage/SignUpPage';
 import LoginPage from './components/LoginPage/LoginPage';
-import setProducts from './components/ProductsPage/setProducts.js';
 export default function App() {
   const [user, setUser] = useState({});
 
@@ -21,7 +20,6 @@ export default function App() {
             <Route path='/cart' element={<h1>CartPage</h1>} />
             <Route path='/checkout' element={<h1>CheckoutPage</h1>} />
             <Route path='/products' element={<Products />} />
-            <Route path='/set-products' element={<setProducts />} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

@@ -5,16 +5,19 @@ export default function ProductsMenu () {
     return (
         <>
             <MenuContainer>
-                <h3>Menu Lindo!</h3>
+                <h3>Most Popular Products</h3>
             </MenuContainer>
         </>);
 }
 
 const MenuContainer = styled.div`
     width: 100vw;
-    height: 160px;
+    height: 70px;
 
     display: flex;
-    justify-content: center;
+    justify-content: initial;
     align-items: center;
+    h3{
+        font-size: 23px;
+    }
 `;
