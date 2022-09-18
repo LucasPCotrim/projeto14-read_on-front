@@ -3,7 +3,8 @@ import React, { useState, useEffect} from 'react';
 import { getProducts } from '../../services/readOnService.js'; 
 import ProductsContainer from './ProductsContainer.js';
 import ProductsBox from './ProductsBox.js';
-import ProductsMenu from './ProductsMenu';
+import ProductsTitle from './ProductsTitle.js';
+import ProductsScrollContainer from './ProductScrollContainer.js';
 
 export default function Products() {
     const [listProducts, setListProducts] = useState([]);
@@ -15,7 +16,6 @@ export default function Products() {
         promise
             .then(res => { 
                 setListProducts(res.data);
-                console.log(res);
               /*   setUser(res.data); */})
             .catch(res => console.log(res))
     }, [render]);
@@ -25,15 +25,25 @@ export default function Products() {
             {listProducts.length > 0 ? 
                 <>
                 <ProductsContainer>
+                <ProductsTitle>
+                    Recommended For You
+                </ ProductsTitle>
+                <ProductsScrollContainer>
                     {listProducts.map((book, index) => 
                         <ProductsBox key={index} {...book}>
                         </ProductsBox>)}
-                        <ProductsMenu />
+                </ ProductsScrollContainer>
+                <ProductsTitle>
+                    Most Popular Products
+                </ ProductsTitle>
+                <ProductsScrollContainer>
                     {listProducts.map((book, index) => 
                         <ProductsBox key={index} {...book}>
                         </ProductsBox>)}
+                </ ProductsScrollContainer>
                 </ ProductsContainer>
                 </> 
             : 'Livro > Filme.'}
         </>);
 }
+

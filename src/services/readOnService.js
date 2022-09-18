@@ -48,4 +48,14 @@ function setProducts(body) {
   return promise;
 }
 
+function getCart(body) {
+  const promise = axios.get(`${BASE_URL}/cart`, body);
+  return promise;
+}
+
+function setCart(body) {
+  const promise = axios.post(`${BASE_URL}/Cart`, body);
+  return promise;
+}
+
 export { signUp, setToken, getToken, getConfig, login, getProducts, setProducts };

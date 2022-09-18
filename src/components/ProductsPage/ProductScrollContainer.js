@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default function ProductsContainer({
+export default function ProductsScrollContainer({
     children
     }) {
 
@@ -12,5 +12,8 @@ export default function ProductsContainer({
 
 const Box = styled.div`
     width: 100vw;
-    padding: 88px 42px 16px 42px;
+    height: 342px;
+    display: flex;
+    overflow-x: scroll;
+    margin: 8px 0;
 `;

@@ -1,18 +1,18 @@
 import styled from 'styled-components';
 
-export default function ProductsMenu () {
+export default function ProductsTitle ({children}) {
 
     return (
         <>
             <MenuContainer>
-                <h3>Most Popular Products</h3>
+                <h3>{children}</h3>
             </MenuContainer>
         </>);
 }
 
 const MenuContainer = styled.div`
     width: 100vw;
-    height: 70px;
+    height: 42px;
 
     display: flex;
     justify-content: initial;
