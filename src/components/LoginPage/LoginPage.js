@@ -4,9 +4,11 @@ import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { login, setToken } from '../../services/readOnService';
 import UserContext from '../../contexts/UserContext';
+import { ThreeDots } from 'react-loader-spinner';
 
 export default function LoginPage() {
   const { user, setUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: '',
@@ -27,21 +29,24 @@ export default function LoginPage() {
   };
   const executeLogin = (event) => {
     event.preventDefault();
+    setIsLoading(true);
     const promise = login(form);
     promise
       .then((res) => {
+        setIsLoading(false);
         setToken(res.data.token, user, setUser);
         setUser({ ...user, name: res.data.user.name, email: res.data.user.email });
         clearForm();
         navigate('/main');
       })
       .catch((res) => {
+        setIsLoading(false);
         alert(res.response?.data?.message || 'Error when connecting to the database');
         clearForm();
       });
   };
 
-  const disableButton = form.email === '' || form.password === '';
+  const invalidForm = form.email === '' || form.password === '';
 
   return (
     <>
@@ -66,8 +71,8 @@ export default function LoginPage() {
             onChange={handleForm}
           />
 
-          <button disabled={disableButton}>
-            <h2>Entrar</h2>
+          <button disabled={invalidForm || isLoading}>
+            {isLoading ? <ThreeDots color={'#112d4e'} height={13} width={51} /> : <h2>Entrar</h2>}
           </button>
         </LoginFormStyle>
         <Link to='/sign-up'>
