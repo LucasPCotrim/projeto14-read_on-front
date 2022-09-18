@@ -85,6 +85,7 @@ function OrderSummary() {
 }
 
 function CheckoutForm() {
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     address: '',
@@ -131,8 +132,9 @@ function CheckoutForm() {
     promise
       .then(() => {
         clearForm();
+        setUser({ ...user, cart: [] });
         alert('Compra realizada com sucesso!');
-        navigate('/');
+        navigate('/main');
       })
       .catch((res) => {
         alert(res.response?.data?.message || 'Error when connecting to the database');
