@@ -6,6 +6,7 @@ const fadeInAnimation = keyframes`
 `;
 
 export const TopMenuStyle = styled.div`
+  z-index: 1;
   background-color: var(--quaternary-color);
   position: fixed;
   top: 0;
@@ -95,6 +96,9 @@ export const TopMenuStyle = styled.div`
           width: 60px;
           height: 50px;
           object-fit: cover;
+          margin-right: 15px;
+        }
+        .product-amount {
           margin-right: 15px;
         }
         .product-name {
