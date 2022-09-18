@@ -7,6 +7,7 @@ import SignUpPage from './components/SignUpPage/SignUpPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import PrivatePage from './components/PrivatePage/PrivatePage';
 import Cart from './components/CartPage/CartPage.js';
+import CheckoutPage from './components/CheckoutPage/CheckoutPage';
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -26,7 +27,14 @@ export default function App() {
                 <PrivatePage>
                   <Cart />
               </PrivatePage>} />
-            <Route path='/checkout' element={<h1>CheckoutPage</h1>} />
+              <Route
+              path='/checkout'
+              element={
+                <PrivatePage>
+                  <CheckoutPage />
+                </PrivatePage>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

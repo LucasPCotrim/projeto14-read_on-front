@@ -13,4 +13,6 @@ export default function ProductsContainer({
 const Box = styled.div`
     width: 100vw;
     padding: 88px 42px 16px 42px;
+    overflow-y: scroll;
+    height: 100vh;
 `;

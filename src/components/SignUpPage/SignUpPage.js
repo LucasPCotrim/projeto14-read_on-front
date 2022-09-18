@@ -1,8 +1,9 @@
 import { SignUpPageStyle, SignUpFormStyle } from './SignUpPage.style';
 import logoUnderline from '../../assets/imgs/logoUnderline.svg';
 import { useState } from 'react';
-import { signUp } from '../../services/readOnService';
+import { signUp } from '../../services/readOnService.js';
 import { Link, useNavigate } from 'react-router-dom';
+import { ThreeDots } from 'react-loader-spinner';
 
 const GENRES = [
   'Fantasia',
@@ -22,6 +23,7 @@ const GENRES = [
 ];
 
 export default function SignUpPage() {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: '',
@@ -58,19 +60,22 @@ export default function SignUpPage() {
   };
   const executeSignUp = (event) => {
     event.preventDefault();
+    setIsLoading(true);
     const promise = signUp(form);
     promise
       .then(() => {
+        setIsLoading(false);
         clearForm();
         navigate('/');
       })
       .catch((res) => {
+        setIsLoading(false);
         alert(res.response?.data?.message || 'Error when connecting to the database');
         clearForm();
       });
   };
 
-  const disableButton =
+  const invalidForm =
     form.name === '' ||
     form.email === '' ||
     form.password === '' ||
@@ -132,8 +137,12 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          <button disabled={disableButton}>
-            <h2>Cadastrar</h2>
+          <button disabled={invalidForm || isLoading}>
+            {isLoading ? (
+              <ThreeDots color={'#112d4e'} height={13} width={51} />
+            ) : (
+              <h2>Cadastrar</h2>
+            )}
           </button>
         </SignUpFormStyle>
         <Link to='/'>

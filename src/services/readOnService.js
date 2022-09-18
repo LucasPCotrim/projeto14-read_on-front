@@ -10,7 +10,6 @@ function setToken(token, user, setUser) {
 
 function getToken() {
   const auth = JSON.parse(localStorage.getItem('readOn'));
-
   return auth?.token;
 }
 
@@ -38,24 +37,37 @@ function login(body) {
   return promise;
 }
 
-function getProducts() {
-  const promise = axios.get(`${BASE_URL}/products`);
+function getProducts(body) {
+  const config = getConfig();
+  const promise = axios.get(`${BASE_URL}/products`, body ,config);
+  return promise;
+}
+
+function checkout(body) {
+  const config = getConfig();
+  const promise = axios.post(`${BASE_URL}/checkout`, body, config);
   return promise;
 }
 
 function setProducts(body) {
-  const promise = axios.post(`${BASE_URL}/products`, body);
+  const config = getConfig();
+  const promise = axios.post(`${BASE_URL}/products`, body, config);
   return promise;
 }
 
 function getCart(body) {
+  const config = getConfig();
   const promise = axios.get(`${BASE_URL}/cart`, body);
   return promise;
 }
 
 function setCart(body) {
-  const promise = axios.post(`${BASE_URL}/Cart`, body);
+  const config = getConfig();
+  const promise = axios.post(`${BASE_URL}/Cart`, body, config);
   return promise;
 }
 
-export { signUp, setToken, getToken, getConfig, login, getProducts, setProducts };
+export { signUp, setToken, getToken, getConfig,
+  login, getProducts, checkout, setProducts,
+  getCart, setCart};
+  
