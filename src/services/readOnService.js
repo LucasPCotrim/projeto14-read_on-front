@@ -9,7 +9,6 @@ function setToken(token, user, setUser) {
 
 function getToken() {
   const auth = JSON.parse(localStorage.getItem('readOn'));
-
   return auth?.token;
 }
 
