@@ -5,6 +5,7 @@ import UserContext from './contexts/UserContext';
 import SignUpPage from './components/SignUpPage/SignUpPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import PrivatePage from './components/PrivatePage/PrivatePage';
+import CheckoutPage from './components/CheckoutPage/CheckoutPage';
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -25,7 +26,14 @@ export default function App() {
               }
             />
             <Route path='/cart' element={<h1>CartPage</h1>} />
-            <Route path='/checkout' element={<h1>CheckoutPage</h1>} />
+            <Route
+              path='/checkout'
+              element={
+                <PrivatePage>
+                  <CheckoutPage />
+                </PrivatePage>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

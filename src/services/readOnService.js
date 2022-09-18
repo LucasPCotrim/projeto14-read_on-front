@@ -100,4 +100,10 @@ function getProducts() {
   };
 }
 
-export { signUp, setToken, getToken, getConfig, login, getProducts };
+function checkout(body) {
+  const config = getConfig();
+  const promise = axios.post(`${BASE_URL}/checkout`, body, config);
+  return promise;
+}
+
+export { signUp, setToken, getToken, getConfig, login, getProducts, checkout };
