@@ -3,6 +3,7 @@ import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../contexts/UserContext';
 import { checkout } from '../../services/readOnService';
+import { ThreeDots } from 'react-loader-spinner';
 
 const ESTADOS = [
   'AC',
@@ -86,6 +87,7 @@ function OrderSummary() {
 
 function CheckoutForm() {
   const { user, setUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     address: '',
@@ -127,12 +129,13 @@ function CheckoutForm() {
   const executeCheckout = (event) => {
     event.preventDefault();
     console.log(form);
+    const cart = user.cart || [];
     clearForm();
     const body = {
       name: user.name,
       email: user.email,
       cpf: form.cpf,
-      products: [...user.cart],
+      products: [...cart],
       addressInfo: {
         address: form.address,
         number: form.number,
@@ -143,19 +146,36 @@ function CheckoutForm() {
         postalCode: form.postalCode,
       },
     };
+    setIsLoading(true);
     const promise = checkout(body);
     promise
       .then(() => {
         clearForm();
         setUser({ ...user, cart: [] });
+        setIsLoading(false);
         alert('Compra realizada com sucesso!');
         navigate('/main');
       })
       .catch((res) => {
+        setIsLoading(false);
         alert(res.response?.data?.message || 'Error when connecting to the database');
         clearForm();
       });
   };
+
+  const invalidForm =
+    form.address === '' ||
+    form.number === '' ||
+    form.district === '' ||
+    form.state === 'Estado' ||
+    form.state === '' ||
+    form.city === '' ||
+    form.postalCode === '' ||
+    form.name === '' ||
+    form.cpf === '' ||
+    form.cardNumber === '' ||
+    form.expirationDate === '' ||
+    form.cvv === '';
 
   return (
     <form onSubmit={executeCheckout}>
@@ -260,8 +280,12 @@ function CheckoutForm() {
           />
         </div>
       </PaymentFormStyle>
-      <button>
-        <h2>Finalizar Compra</h2>
+      <button disabled={invalidForm || isLoading}>
+        {isLoading ? (
+          <ThreeDots color={'#112d4e'} height={13} width={51} />
+        ) : (
+          <h2>Finalizar Compra</h2>
+        )}
       </button>
     </form>
   );

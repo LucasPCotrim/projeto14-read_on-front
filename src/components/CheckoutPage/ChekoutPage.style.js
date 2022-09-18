@@ -94,6 +94,7 @@ export const CheckoutPageStyle = styled.div`
 `;
 
 const FormStyle = styled.div`
+  width: 100%;
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -201,7 +202,7 @@ export const PaymentFormStyle = styled(FormStyle)`
       width: 25%;
     }
     input[name='cvv'] {
-      width: 20%;
+      width: 30%;
     }
   }
 `;
