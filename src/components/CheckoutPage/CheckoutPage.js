@@ -128,7 +128,22 @@ function CheckoutForm() {
     event.preventDefault();
     console.log(form);
     clearForm();
-    const promise = checkout(form);
+    const body = {
+      name: user.name,
+      email: user.email,
+      cpf: form.cpf,
+      products: [...user.cart],
+      addressInfo: {
+        address: form.address,
+        number: form.number,
+        complement: form.addressComplement,
+        district: form.district,
+        state: form.state,
+        city: form.city,
+        postalCode: form.postalCode,
+      },
+    };
+    const promise = checkout(body);
     promise
       .then(() => {
         clearForm();
