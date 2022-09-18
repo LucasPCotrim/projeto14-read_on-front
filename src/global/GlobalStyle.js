@@ -138,12 +138,14 @@ const Global = css`
     --secundary-color: #dbe2ef;
     --tertiary-color: #3f72af;
     --quaternary-color: #112d4e;
+    --quaternary-color-alt: #0c2038;
     /* https://colorhunt.co/palette/f9f7f7dbe2ef3f72af112d4e */
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    overflow: hidden;
     background-color: var(--secundary-color);
     color: var(--quaternary-color);
     font-family: 'Roboto', sans-serif;
