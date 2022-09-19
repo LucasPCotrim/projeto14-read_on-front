@@ -21,14 +21,20 @@ export default function App() {
             <Route path='/sign-up' element={<SignUpPage />} />
             <Route
               path='/main'
-              element={<PrivatePage>
-                <Products />
-              </PrivatePage>}
+              element={
+                <PrivatePage>
+                  <Products />
+                </PrivatePage>
+              }
             />
-            <Route path='/cart' element={
+            <Route
+              path='/cart'
+              element={
                 <PrivatePage>
                   <Cart />
-              </PrivatePage>} />
+                </PrivatePage>
+              }
+            />
             <Route
               path='/checkout'
               element={
