@@ -40,10 +40,11 @@ function OrderSummary() {
 
   let numberItems;
   let orderValue;
-  if (user.cart) {
-    numberItems = user.cart.length;
-    orderValue = user.cart.reduce((acc, product) => {
-      return acc + product.price;
+  if (user.cart.products) {
+    numberItems = user.cart.products.length;
+    orderValue = user.cart.products.reduce((acc, product) => {
+      const item = user?.products?.find(userProduct => userProduct._id === product.productId);
+      return (parseInt(acc) + parseInt(item.price));
     }, 0);
   } else {
     numberItems = 0;

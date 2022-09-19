@@ -37,23 +37,9 @@ function login(body) {
   return promise;
 }
 
-function getProducts() {
-  const promise = axios.get(`${BASE_URL}/products`);
-  return promise;
-}
-
-function setProducts(body) {
-  const promise = axios.post(`${BASE_URL}/products`, body);
-  return promise;
-}
-
-function getCart(body) {
-  const promise = axios.get(`${BASE_URL}/cart`, body);
-  return promise;
-}
-
-function setCart(body) {
-  const promise = axios.post(`${BASE_URL}/Cart`, body);
+function getProducts(body) {
+  const config = getConfig();
+  const promise = axios.get(`${BASE_URL}/products`, body ,config);
   return promise;
 }
 
@@ -63,4 +49,25 @@ function checkout(body) {
   return promise;
 }
 
-export { signUp, setToken, getToken, getConfig, login, getProducts, setProducts, checkout };
+function setProducts(body) {
+  const config = getConfig();
+  const promise = axios.post(`${BASE_URL}/products`, body, config);
+  return promise;
+}
+
+function getCart(body) {
+  const config = getConfig();
+  const promise = axios.get(`${BASE_URL}/cart`, body, config);
+  return promise;
+}
+
+function setCart(body) {
+  const config = getConfig();
+  const promise = axios.post(`${BASE_URL}/cart`, body, config);
+  return promise;
+}
+
+export { signUp, setToken, getToken, getConfig,
+  login, getProducts, checkout, setProducts,
+  getCart, setCart};
+  

@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 function CartMenu({ setCartPopUpMenu }) {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const cartProducts = user.cart || [];
+  const cartProducts = user?.cart?.products || [];
 
   return (
     <div className='cart-menu'>
@@ -17,12 +17,13 @@ function CartMenu({ setCartPopUpMenu }) {
         <FontAwesomeIcon id='icon' icon={faXmark} onClick={() => setCartPopUpMenu(false)} />
         <div className='cart-summary'>
           {cartProducts.map((product, index) => {
+            const item = user?.products?.find(userProduct => userProduct._id === product.productId);
             return (
               <div className='product' key={index}>
-                <img src={product.img} alt='product' />
+                <img src={item.image} alt='product' />
                 <div className='product-amount'>{`${product.amount}x`}</div>
-                <div className='product-name'>{product.name}</div>
-                <div className='product-value'>{`R$ ${product.price}`}</div>
+                <div className='product-name'>{item.name}</div>
+                <div className='product-value'>{`R$ ${item.price}`}</div>
               </div>
             );
           })}
@@ -49,10 +50,9 @@ function CartMenu({ setCartPopUpMenu }) {
 }
 
 function IconsContainer() {
-  const { user } = useContext(UserContext);
-  const [cartPopUpMenu, setCartPopUpMenu] = useState(false);
+  const { user, cartPopUpMenu, setCartPopUpMenu } = useContext(UserContext);
   const [userPopUpMenu, setUserPopUpMenu] = useState(false);
-  const cartCount = user.cart ? user.cart.length : 0;
+  const cartCount = user?.cart?.products ? user?.cart?.products?.length : 0;
 
   return (
     <IconsContainerStyle>

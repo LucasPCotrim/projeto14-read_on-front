@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 
 import { getProducts } from '../../services/readOnService.js';
 import ProductsContainer from './ProductsContainer.js';
@@ -6,45 +6,45 @@ import ProductsBox from './ProductsBox.js';
 import ProductsTitle from './ProductsTitle.js';
 import ProductsScrollContainer from './ProductScrollContainer.js';
 
-export default function Products() {
-  const [listProducts, setListProducts] = useState([]);
-  /* const {user, setUser} = useContext(UserContext); */
-  const [render, setRender] = useState(false);
+import UserContext from '../../contexts/UserContext';
 
-  useEffect(() => {
-    const promise = getProducts();
-    promise
-      .then((res) => {
-        setListProducts(res.data);
-        /*   setUser(res.data); */
-      })
-      .catch((res) => console.log(res));
-  }, [render]);
+export default function Products() {
+    const [listProducts, setListProducts] = useState([]);
+    const {user, setUser} = useContext(UserContext);
+    
+    useEffect(() => {
+        const promise = getProducts();
+        promise
+            .then(res => { 
+                setListProducts(res.data);
+                setUser({ ...user,
+                    products: res.data});})
+            .catch(res => console.log(res))
+    }, []);
 
   return (
     <>
-      {listProducts.length > 0 ? (
-        <>
-          <ProductsContainer>
-            <ProductsTitle>Recommended For You</ProductsTitle>
+        {listProducts.length > 0 ? 
+            <>
+            <ProductsContainer>
+            <ProductsTitle>
+                Recomendado Para Você
+            </ ProductsTitle>
             <ProductsScrollContainer>
-              {listProducts.map((book, index) => (
-                <ProductsBox key={index} {...book}></ProductsBox>
-              ))}
-            </ProductsScrollContainer>
-            <ProductsTitle>Most Popular Products</ProductsTitle>
+                {listProducts.map((book, index) => 
+                    <ProductsBox key={index} {...book}>
+                    </ProductsBox>)}
+            </ ProductsScrollContainer>
+            <ProductsTitle>
+                Produtos Mais Populares
+            </ ProductsTitle>
             <ProductsScrollContainer>
-              {listProducts.map((book, index) => (
-                <ProductsBox key={index} {...book}></ProductsBox>
-              ))}
-            </ProductsScrollContainer>
-          </ProductsContainer>
-        </>
-      ) : (
-        <>
-          <h1>Livro > Filme.</h1>
-        </>
-      )}
-    </>
-  );
+                {listProducts.map((book, index) => 
+                    <ProductsBox key={index} {...book}>
+                    </ProductsBox>)}
+            </ ProductsScrollContainer>
+            </ ProductsContainer>
+            </> 
+        : 'Ops... Não existe nenhum livro no catálogo!'}
+    </>);
 }

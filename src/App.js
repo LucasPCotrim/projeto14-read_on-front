@@ -10,11 +10,15 @@ import Cart from './components/CartPage/CartPage.js';
 import CheckoutPage from './components/CheckoutPage/CheckoutPage';
 
 export default function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    cart: {products: []},
+    products: []
+  });
+  const [cartPopUpMenu, setCartPopUpMenu] = useState(false);
   return (
     <>
       <GlobalStyle />
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ user, setUser, cartPopUpMenu, setCartPopUpMenu }}>
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<LoginPage />} />

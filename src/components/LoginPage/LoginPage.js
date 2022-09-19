@@ -35,7 +35,10 @@ export default function LoginPage() {
       .then((res) => {
         setIsLoading(false);
         setToken(res.data.token, user, setUser);
-        setUser({ ...user, name: res.data.user.name, email: res.data.user.email });
+        setUser({ ...user,
+            name: res.data.user.name,
+            email: res.data.user.email,
+            userId: res.data.user.userId });
         clearForm();
         navigate('/main');
       })

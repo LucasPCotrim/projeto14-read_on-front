@@ -1,7 +1,7 @@
 import { SignUpPageStyle, SignUpFormStyle } from './SignUpPage.style';
 import logoUnderline from '../../assets/imgs/logoUnderline.svg';
 import { useState } from 'react';
-import { signUp } from '../../services/readOnService';
+import { signUp } from '../../services/readOnService.js';
 import { Link, useNavigate } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
 

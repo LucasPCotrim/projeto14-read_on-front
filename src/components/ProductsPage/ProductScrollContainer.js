@@ -11,7 +11,6 @@ export default function ProductsScrollContainer({
 }
 
 const Box = styled.div`
-    width: 100vw;
     height: 342px;
     display: flex;
     overflow-x: scroll;

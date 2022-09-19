@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
-import { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import UserContext from '../../contexts/UserContext';
+import { setCart } from '../../services/readOnService.js';
 
 export default function ProductsBox({
   _id,
@@ -19,28 +20,54 @@ export default function ProductsBox({
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  function addCart(idProduct) {
-    alert(idProduct);
-    /* setCart() */
-  }
+    const { user, setUser, setCartPopUpMenu } = useContext(UserContext);
+    const navigate = useNavigate();
 
-  return (
-    <BookBox>
-      <ImageBook src={image} alt={title} />
-      <h1>{title}</h1>
-      <h2>{subTitulo}</h2>
-      <div className='amount'>
-        <h2>{genre}</h2>
-        {amount > 0 ? <>{amount} un</> : <p>indisponível</p>}
-      </div>
-      <Price>
-        <p>{`R$ ${price}`}</p>
-      </Price>
-      <ButtonCart onClick={() => addCart(_id)}>
-        <FontAwesomeIcon id='icon' icon={faAdd} />
-      </ButtonCart>
-    </BookBox>
-  );
+    function addCart (productId) {
+        let amount = 1;
+        let newCart = {products: [{
+            productId,
+            amount
+        }]};
+        if(user?.cart?.products?.length > 0){
+            const cartProduct = user.cart.products.find(product => product.productId === productId);
+            if(cartProduct){
+                amount += cartProduct.amount;
+                newCart.products = user.cart.products.filter(product => product.productId !== productId);
+                newCart.products.push({...cartProduct, amount})
+            }
+            else{
+                newCart.products = user.cart.products;
+                console.log(newCart)
+                newCart.products.push({
+                    productId,
+                    amount
+                });
+            }
+        }
+        
+        const promise = setCart(newCart);
+            promise
+                .then(res => { 
+                    setUser({ ...user,
+                        cart: newCart});
+                        setCartPopUpMenu(true)})
+                .catch(res => console.log(res))
+    }
+
+    return(
+        <BookBox>
+            <ImageBook src={image} alt={title}/>
+            <h1>{title}</h1>
+            <h2>{subTitulo}</h2>
+                <h3>{genre} {amount > 0 ? <>{amount} un</> : <p>indisponível</p>}</h3>
+            <Price>
+                <p>R$ {(parseInt(price)/100).toFixed(2)}</p>
+            </Price>
+            <ButtonCart onClick={()=> {amount > 0 ? addCart(_id) : alert('Produto Indisponível!')}}>
+                    <FontAwesomeIcon id='icon' icon={faAdd} />
+                </ButtonCart>
+        </BookBox>);
 }
 
 const BookBox = styled.div`
@@ -77,20 +104,33 @@ const BookBox = styled.div`
   .amount {
     width: 200px;
     display: flex;
-    justify-content: space-evenly;
-    font-size: 14px;
-    p {
-      color: var(--secundary-color);
-    }
-    h2 {
-      width: auto;
-      font-size: 14px;
-      line-height: 14px;
-      height: 14px;
-    }
-  }
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
 
-  word-break: break-all;
+    h1{
+        width: 200px;
+        text-align: center;
+        font-size: 18px;
+        line-height: 18px;
+    }
+    h2{
+        width: 200px;
+        font-size: 14px;
+        overflow-y: hidden;
+        height: 28px;
+    }
+    h3{
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        font-size: 14px;
+        p{
+          color: var(--secundary-color);  
+        }
+    }
+    word-break: break-all;
 `;
 
 const Price = styled.div`
@@ -110,21 +150,21 @@ const ImageBook = styled.img`
 `;
 
 const ButtonCart = styled.div`
-  position: absolute;
-  color: var(--primary-color);
-  background-color: var(--quaternary-color);
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  right: 8px;
-  bottom: 8px;
-  cursor: pointer;
-  transition: all 0.5s;
-  &:hover {
-    background-color: var(--quaternary-color-alt);
-    transform: scale(1.2);
-  }
+    position: absolute;
+    color: var(--primary-color);
+    background-color: var(--quaternary-color);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 8px;
+    bottom: 8px;
+    cursor: pointer;
+    transition: all 0.5s;
+    &:hover {
+      background-color: var(--quaternary-color-alt);
+      transform: scale(1.2);
+    }
 `;
