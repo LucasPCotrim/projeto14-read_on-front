@@ -9,12 +9,12 @@ import { setCart } from '../../services/readOnService.js';
 export default function ProductsBox({
   _id,
   title,
-  subTitulo = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  description,
   image,
   autor,
   price,
   amount,
-  genre = 'Police',
+  genre,
 }) {
   const { user, setUser, setCartPopUpMenu } = useContext(UserContext);
 
@@ -57,10 +57,8 @@ export default function ProductsBox({
     <BookBox>
       <ImageBook src={image} alt={title} />
       <h1>{title}</h1>
-      <h2>{subTitulo}</h2>
-      <h3>
-        {genre} {amount > 0 ? <>{amount} un</> : <p>indisponível</p>}
-      </h3>
+      <h2>{description}</h2>
+      <h3>{amount > 0 ? <>{amount} un</> : <p>indisponível</p>}</h3>
       <Price>
         <p>R$ {(parseInt(price) / 100).toFixed(2)}</p>
       </Price>

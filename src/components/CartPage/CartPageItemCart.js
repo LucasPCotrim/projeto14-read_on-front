@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
@@ -79,7 +79,7 @@ export default function ItemCart({ productId, productAmount }) {
         <ImageBook src={item?.image} alt={item?.title} />
         <div>
           <h1>{item?.title}</h1>
-          <h2>{item?.subTitulo}</h2>
+          <h2>{item?.description}</h2>
         </div>
         <div>
           <Price>
