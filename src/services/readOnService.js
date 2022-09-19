@@ -10,7 +10,6 @@ function setToken(token, user, setUser) {
 
 function getToken() {
   const auth = JSON.parse(localStorage.getItem('readOn'));
-
   return auth?.token;
 }
 
@@ -58,4 +57,10 @@ function setCart(body) {
   return promise;
 }
 
-export { signUp, setToken, getToken, getConfig, login, getProducts, setProducts };
+function checkout(body) {
+  const config = getConfig();
+  const promise = axios.post(`${BASE_URL}/checkout`, body, config);
+  return promise;
+}
+
+export { signUp, setToken, getToken, getConfig, login, getProducts, setProducts, checkout };
