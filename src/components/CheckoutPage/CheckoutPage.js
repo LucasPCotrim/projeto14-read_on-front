@@ -44,7 +44,7 @@ function OrderSummary() {
     numberItems = user.cart.products.length;
     orderValue = user.cart.products.reduce((acc, product) => {
       const item = user?.products?.find((userProduct) => userProduct._id === product.productId);
-      return parseInt(acc) + parseInt(item.price);
+      return parseInt(acc) + parseInt(item.price) / 100;
     }, 0);
   } else {
     numberItems = 0;
@@ -104,7 +104,6 @@ function CheckoutForm() {
     expirationDate: '',
     cvv: '',
   });
-
   const handleForm = (event) => {
     setForm({
       ...form,
@@ -130,13 +129,13 @@ function CheckoutForm() {
   const executeCheckout = (event) => {
     event.preventDefault();
     console.log(form);
-    const cart = user.cart.products || [];
+    const cartProducts = user.cart.products || [];
     clearForm();
     const body = {
       name: user.name,
       email: user.email,
       cpf: form.cpf,
-      products: [...cart],
+      products: cartProducts,
       addressInfo: {
         address: form.address,
         number: form.number,
@@ -147,6 +146,7 @@ function CheckoutForm() {
         postalCode: form.postalCode,
       },
     };
+    console.log(body);
     setIsLoading(true);
     const promise = checkout(body);
     promise

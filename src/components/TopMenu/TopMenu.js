@@ -17,13 +17,15 @@ function CartMenu({ setCartPopUpMenu }) {
         <FontAwesomeIcon id='icon' icon={faXmark} onClick={() => setCartPopUpMenu(false)} />
         <div className='cart-summary'>
           {cartProducts.map((product, index) => {
-            const item = user?.products?.find(userProduct => userProduct._id === product.productId);
+            const item = user?.products?.find(
+              (userProduct) => userProduct._id === product.productId
+            );
             return (
               <div className='product' key={index}>
                 <img src={item.image} alt='product' />
                 <div className='product-amount'>{`${product.amount}x`}</div>
                 <div className='product-name'>{item.name}</div>
-                <div className='product-value'>{`R$ ${item.price}`}</div>
+                <div className='product-value'>{`R$ ${(item.price / 100).toFixed(2)}`}</div>
               </div>
             );
           })}
