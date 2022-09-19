@@ -113,28 +113,29 @@ const BookBox = styled.div`
     flex-direction: column;
     cursor: pointer;
 
-    h1{
-        width: 200px;
-        text-align: center;
-        font-size: 18px;
-        line-height: 18px;
+    h1 {
+      width: 200px;
+      text-align: center;
+      font-size: 18px;
+      line-height: 18px;
     }
-    h2{
-        width: 200px;
-        font-size: 14px;
-        overflow-y: hidden;
-        height: 28px;
+    h2 {
+      width: 200px;
+      font-size: 14px;
+      overflow-y: hidden;
+      height: 28px;
     }
-    h3{
-        width: 200px;
-        display: flex;
-        justify-content: center;
-        font-size: 14px;
-        p{
-          color: var(--secundary-color);  
-        }
+    h3 {
+      width: 200px;
+      display: flex;
+      justify-content: center;
+      font-size: 14px;
+      p {
+        color: var(--secundary-color);
+      }
     }
     word-break: break-all;
+  }
 `;
 
 const Price = styled.div`
