@@ -6,15 +6,31 @@ import UserContext from '../../contexts/UserContext';
 export default function CartResume() {
     const navigate = useNavigate();
     const {user, setUser} = useContext(UserContext);
-    let total = 0;
+    const [total, setTotal] = useState(0);
+    
+    useEffect(() => {
+        if(!user.cart){
+            console.log('pega lá no localstorage')
+        }
+        calculaTotal();
+    }, [user]);
+
+    function calculaTotal () {
+        let soma = 0;
+        user?.cart?.products?.map(e => {
+            const item = user?.products?.find(product => product._id === e.productId);
+            soma += e.amount * parseInt(item?.price).toFixed(2);
+        })
+        setTotal(soma/100);
+    }
+
     function ItemResume({productId, productAmount}){
-        const item = user.products?.find(product => product._id === productId);
-        const subTotal = item?.price * productAmount || '-';
-        total += subTotal || 289.99; 
+        const item = user?.products?.find(product => product._id === productId) || '';
+        const subTotal = (parseInt(item?.price) * productAmount)/100 || 0;
         return (
             <>
             <BoxResume>
-                <h3>{item.title}</h3> <h2>{item.price} x {productAmount}</h2> <h2>R$ {subTotal}</h2>
+                <h3>{item.title}</h3> <h2>{item.price} x {productAmount}</h2> <h2>R$ {subTotal.toFixed(2)}</h2>
             </BoxResume>
             </>);
     }
@@ -22,12 +38,15 @@ export default function CartResume() {
     return (
         <>
             <CartContainerResume>
-               {user?.cart?.map((itemResume, index) => <ItemResume 
+                <ContainerTotal>
+                    <p>Resume Cart</p>
+                </ContainerTotal>
+               {user?.cart?.products?.map((itemResume, index) => <ItemResume 
                     key={index} 
                     productId={itemResume.productId}
                     productAmount={itemResume.amount} />)}
                 <ContainerTotal>
-                    <p>Total</p> <p>R$ {total}</p>
+                    <p>Total</p> <p>R$ {total.toFixed(2)}</p>
                 </ContainerTotal>
                 <ButtomFinalizar onClick={()=> navigate('/checkout')}>
                     Finalizar Compra
@@ -52,25 +71,30 @@ const CartContainerResume = styled.div`
 
     word-break: break-all;
     @media (min-width: 1080px) {
-    position: fixed;
-    top: 142px;
-    left: 560px;
+        position: fixed;
+        top: 142px;
+        left: 560px;
     }
-
+    @media (max-width: 415px) {
+        width: 340px;
+    }
 `;
 
 const BoxResume = styled.div`
     width: 500px;
     height: 30px;
-    padding: 8px 16px;
+    padding: 8px 8px;
     display: flex;
     justify-content: space-between;
     h3{
-        width: 240px;
+        width: 200px;
     }
     h2{
         width: 80px;
         text-align: end;
+    }
+    @media (max-width: 415px) {
+        width: 340px;
     }
 `;
 
@@ -91,6 +115,9 @@ const ButtomFinalizar = styled.div`
         transform: scale(1.1);
     }
     margin: 0px 8px 16px 280px;
+    @media (max-width: 415px) {
+        margin: 8px auto;
+    }
 `;
 
 const ContainerTotal = styled.div`
@@ -103,4 +130,7 @@ const ContainerTotal = styled.div`
     font-weight: 700;
     font-size: 16px;
     padding: 0 16px;
+    @media (max-width: 415px) {
+        width: 340px;
+    }
 `;

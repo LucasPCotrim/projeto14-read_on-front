@@ -9,57 +9,18 @@ import CartResume from './CartResume.js';
 
 export default function Cart() {
 
-    const [listProducts, setListProducts] = useState([]);
     const {user, setUser} = useContext(UserContext);
-    const [render, serRender] = useState(false);
-    
-    useEffect(() => {
-        setUser({ ...user,
-                    cart: 
-                    [{
-                        userId: user._id,
-                        productId: '6324e8dc835cef1b88556a3d',
-                        amount: 1
-                    },
-                    {
-                        userId: user._id,
-                        productId: '6324e8dc835cef1b88556a3d',
-                        amount: 3
-                    },
-                    {
-                        userId: user._id,
-                        productId: '6324e8dc835cef1b88556a3d',
-                        amount: 3
-                    },
-                    {
-                        userId: user._id,
-                        productId: '6324e8dc835cef1b88556a3d',
-                        amount: 3
-                    },
-                    {
-                        userId: user._id,
-                        productId: '6324e8dc835cef1b88556a3d',
-                        amount: 3
-                    },
-                    {
-                        userId: user._id,
-                        productId: '6324e8dc835cef1b88556a3d',
-                        amount: 3
-                    },
-                ]
-                });
-    }, []);
 
     return (
         <>
             <ProductsContainer>
-                {user?.cart?.length > 0 ? 
+                {user?.cart?.products?.length > 0 ? 
                     <>
                         <ProductsTitle>
-                            You Cart
+                            Seu Carrinho
                         </ ProductsTitle>
                         <>
-                            {user?.cart.map((itemCart, index) => 
+                            {user?.cart?.products?.map((itemCart, index) => 
                                 <CardItemCart key={index} productId={itemCart.productId} productAmount={itemCart.amount} />
                             )}
                         </>

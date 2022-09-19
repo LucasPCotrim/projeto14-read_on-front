@@ -57,13 +57,13 @@ function setProducts(body) {
 
 function getCart(body) {
   const config = getConfig();
-  const promise = axios.get(`${BASE_URL}/cart`, body);
+  const promise = axios.get(`${BASE_URL}/cart`, body, config);
   return promise;
 }
 
 function setCart(body) {
   const config = getConfig();
-  const promise = axios.post(`${BASE_URL}/Cart`, body, config);
+  const promise = axios.post(`${BASE_URL}/cart`, body, config);
   return promise;
 }
 

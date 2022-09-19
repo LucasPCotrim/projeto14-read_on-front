@@ -11,7 +11,6 @@ export default function ProductsTitle ({children}) {
 }
 
 const MenuContainer = styled.div`
-    width: 100vw;
     height: 42px;
 
     display: flex;

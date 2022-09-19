@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
-import { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import UserContext from '../../contexts/UserContext';
+import { setCart } from '../../services/readOnService.js';
 
 export default function ProductsBox ({
     _id,
@@ -17,12 +18,39 @@ export default function ProductsBox ({
     genre='Police',
     }) {
 
-    const { user, setUser } = useContext(UserContext);
+    const { user, setUser, setCartPopUpMenu } = useContext(UserContext);
     const navigate = useNavigate();
 
-    function addCart (idProduct) {
-        alert(idProduct)
-        /* setCart() */
+    function addCart (productId) {
+        let amount = 1;
+        let newCart = {products: [{
+            productId,
+            amount
+        }]};
+        if(user?.cart?.products?.length > 0){
+            const cartProduct = user.cart.products.find(product => product.productId === productId);
+            if(cartProduct){
+                amount += cartProduct.amount;
+                newCart.products = user.cart.products.filter(product => product.productId !== productId);
+                newCart.products.push({...cartProduct, amount})
+            }
+            else{
+                newCart.products = user.cart.products;
+                console.log(newCart)
+                newCart.products.push({
+                    productId,
+                    amount
+                });
+            }
+        }
+        
+        const promise = setCart(newCart);
+            promise
+                .then(res => { 
+                    setUser({ ...user,
+                        cart: newCart});
+                        setCartPopUpMenu(true)})
+                .catch(res => console.log(res))
     }
 
     return(
@@ -30,11 +58,11 @@ export default function ProductsBox ({
             <ImageBook src={image} alt={title}/>
             <h1>{title}</h1>
             <h2>{subTitulo}</h2>
-            <h3><h2>{genre}</h2>{amount > 0 ? <>{amount} un</> : <p>indisponível</p>}</h3>
+                <h3>{genre} {amount > 0 ? <>{amount} un</> : <p>indisponível</p>}</h3>
             <Price>
-                <p>R$ {price}</p>
+                <p>R$ {(parseInt(price)/100).toFixed(2)}</p>
             </Price>
-            <ButtonCart onClick={()=> addCart(_id)}>
+            <ButtonCart onClick={()=> {amount > 0 ? addCart(_id) : alert('Produto Indisponível!')}}>
                     <FontAwesomeIcon id='icon' icon={faAdd} />
                 </ButtonCart>
         </BookBox>);
@@ -71,19 +99,12 @@ const BookBox = styled.div`
     h3{
         width: 200px;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
         font-size: 14px;
         p{
           color: var(--secundary-color);  
         }
-        h2{
-        width: auto;
-        font-size: 14px;
-        line-height: 14px;
-        height: 14px;
-        }
     }
-
     word-break: break-all;
 `;
 

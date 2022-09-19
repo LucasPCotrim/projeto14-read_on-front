@@ -4,39 +4,98 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 import UserContext from '../../contexts/UserContext';
+import { setCart } from '../../services/readOnService';
 
 export default function ItemCart ({productId, productAmount}){
 
     const {user, setUser} = useContext(UserContext);
     
-    const item = user.products?.find(product => product._id === productId);
+    const item = user?.products?.find(product => product._id === productId);
+
+    function updateCart (productId, op) {
+        let amount = 1
+        if(!op){
+            amount = -1;
+        }
+        let newCart = {products: [{
+            productId,
+            amount
+        }]};
+        if(user?.cart?.products?.length > 0){
+            const cartProduct = user.cart.products.find(product => product.productId === productId);
+            if(cartProduct){
+                amount += cartProduct.amount;
+                newCart.products = user.cart.products.filter(product => product.productId !== productId);
+                newCart.products.push({...cartProduct, amount})
+            }
+            else{
+                newCart.products = user.cart.products;
+                newCart.products.push({
+                    productId,
+                    amount
+                });
+            }
+        }
+        
+        const promise = setCart(newCart);
+            promise
+                .then(res => { 
+                    setUser({ ...user,
+                        cart: newCart});})
+                .catch(res => {
+                    alert('Não foi possível realizar a operação!');
+                    console.log(res);
+                })
+    }
+
+    function deleteItemCart (productId) {
+        if(user?.cart?.products?.length > 0){
+            const newCartproducts = user.cart.products.filter(product => product.productId !== productId);
+            const newCart = {products: newCartproducts};
+            const promise = setCart(newCart);
+            promise
+                .then(res => { 
+                    setUser({ ...user,
+                        cart: newCart});})
+                .catch(res => {
+                    alert('Não foi possível realizar a operação!');
+                    console.log(res);
+                })
+        }
+    }
+
+    if( item.amount - productAmount < 0){
+        alert(`Quantidade indiponível do produto: ${item.name}, produto será excluído!`);
+        deleteItemCart (productId);
+    }
 
     return(
         <>
             <ItemBox>
-            <ImageBook src={item.image} alt={item.title}/>
+            <ImageBook src={item?.image} alt={item?.title}/>
             <div>
-                <h1>{item.title}</h1>
-                <h2>{item.subTitulo}</h2> 
+                <h1>{item?.title}</h1>
+                <h2>{item?.subTitulo}</h2> 
             </div>            
             <div>
-                {item.amount > 0 ? <>Amount: {productAmount}</> : <p>indisponível</p>}
+                <Price>
+                    <p>R$ {item?.price}</p>
+                </Price>
+                {item?.amount > 0 ? <>Amount: {productAmount}</> : <p>indisponível</p>}
                 <ContainerButton>
-                <ButtonCart >
-                        +
-                </ButtonCart>
-                <ButtonCart >
-                        -
-                </ButtonCart>
-                <ButtonCart >
-                        <FontAwesomeIcon id='icon' icon={faTrashCan} />
-                </ButtonCart>
-            </ContainerButton>
-            
+                    <ButtonCart onClick={(item?.amount - productAmount) > 0 ? ()=>{updateCart(productId, 1)} :
+                        () => alert('Não há mais quantidades disponíveis do produto!') }>
+                            +
+                    </ButtonCart>
+                    <ButtonCart onClick={(productAmount > 1) ? ()=>{updateCart(productId, 0)} : 
+                        () => alert('Quantidade precisa ser maior ou igual 1')}>
+                            -
+                    </ButtonCart>
+                    <ButtonCart onClick={()=>{deleteItemCart(productId)}}>
+                            <FontAwesomeIcon id='icon' icon={faTrashCan} />
+                    </ButtonCart>
+                </ContainerButton>
             </div>
-            <Price>
-                <p>R$ {item.price}</p>
-            </Price>
             </ItemBox>
         </>
     );
@@ -63,15 +122,21 @@ const ItemBox = styled.div`
     }
     h1{
         width: 160px;
-        text-align: center;
-        font-size: 18px;
+        font-size: 16px;
         line-height: 18px;
+        text-align: initial;
+        @media (max-width: 415px) {
+        width: 120px;
+        }
     }
     h2{
         width: 160px;
         font-size: 14px;
         overflow-y: hidden;
         height: 28px;
+        @media (max-width: 415px) {
+        width: 120px;
+        }
     }
     .amount{
         
@@ -88,8 +153,10 @@ const ItemBox = styled.div`
         height: 14px;
         }
     }
-
-    word-break: break-all;
+    word-break: normal;
+    @media (max-width: 415px) {
+        width: 340px;
+    }
 `;
 
 const Price = styled.div`
@@ -99,6 +166,7 @@ const Price = styled.div`
     color: var(--tertiary-color);
     font-weight: 700;
     font-size: 16px;
+    margin: 4px 0;
 `;
 
 const ImageBook = styled.img`
@@ -111,9 +179,9 @@ const ImageBook = styled.img`
 const ButtonCart = styled.div`
     color: var(--primary-color);
     background-color: var(--quaternary-color);
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -127,7 +195,7 @@ const ButtonCart = styled.div`
 `;
 
 const ContainerButton = styled.div`
-    width: 120px;
+    width: 80px;
     height: 52px;
     display: flex;
     justify-content: space-between;

@@ -11,7 +11,6 @@ import UserContext from '../../contexts/UserContext';
 export default function Products() {
     const [listProducts, setListProducts] = useState([]);
     const {user, setUser} = useContext(UserContext);
-    const [render, serRender] = useState(false);
     
     useEffect(() => {
         const promise = getProducts();
@@ -21,7 +20,7 @@ export default function Products() {
                 setUser({ ...user,
                     products: res.data});})
             .catch(res => console.log(res))
-    }, [render]);
+    }, []);
 
     return (
         <>
@@ -29,7 +28,7 @@ export default function Products() {
                 <>
                 <ProductsContainer>
                 <ProductsTitle>
-                    Recommended For You
+                    Recomendado Para Você
                 </ ProductsTitle>
                 <ProductsScrollContainer>
                     {listProducts.map((book, index) => 
@@ -37,7 +36,7 @@ export default function Products() {
                         </ProductsBox>)}
                 </ ProductsScrollContainer>
                 <ProductsTitle>
-                    Most Popular Products
+                    Produtos Mais Populares
                 </ ProductsTitle>
                 <ProductsScrollContainer>
                     {listProducts.map((book, index) => 
