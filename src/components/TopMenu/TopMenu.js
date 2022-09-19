@@ -28,7 +28,11 @@ function CartMenu({ setCartPopUpMenu }) {
           })}
         </div>
         <div className='buttons-container'>
-          <button onClick={() => navigate('/cart')}>
+          <button
+            onClick={() => {
+              setCartPopUpMenu(false);
+              navigate('/cart');
+            }}>
             <h2>Visualizar Carrinho</h2>
           </button>
           <button
