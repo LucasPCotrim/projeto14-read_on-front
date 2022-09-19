@@ -30,7 +30,7 @@ export default function ProductsBox ({
             <ImageBook src={image} alt={title}/>
             <h1>{title}</h1>
             <h2>{subTitulo}</h2>
-            <div className='amount'><h2>{genre}</h2>{amount > 0 ? <>{amount} un</> : <p>indisponível</p>}</div>
+            <h3><h2>{genre}</h2>{amount > 0 ? <>{amount} un</> : <p>indisponível</p>}</h3>
             <Price>
                 <p>R$ {price}</p>
             </Price>
@@ -55,10 +55,7 @@ const BookBox = styled.div`
     align-items: center;
     flex-direction: column;
     cursor: pointer;
-    transition: all 0.5s;
-    &:hover {
-        transform: scale(1.05);
-    }
+
     h1{
         width: 200px;
         text-align: center;
@@ -71,7 +68,7 @@ const BookBox = styled.div`
         overflow-y: hidden;
         height: 28px;
     }
-    .amount{
+    h3{
         width: 200px;
         display: flex;
         justify-content: space-evenly;
@@ -119,9 +116,4 @@ const ButtonCart = styled.div`
     right: 8px;
     bottom: 8px;
     cursor: pointer;
-    transition: all 0.5s;
-    &:hover {
-        background-color: var(--quaternary-color-alt);
-        transform: scale(1.2);
-    }
 `;

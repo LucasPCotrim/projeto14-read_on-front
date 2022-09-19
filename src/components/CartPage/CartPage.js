@@ -5,6 +5,7 @@ import ProductsTitle from '../ProductsPage/ProductsTitle.js';
 import CardItemCart from './CartPageItemCart.js';
 
 import UserContext from '../../contexts/UserContext';
+import CartResume from './CartResume.js';
 
 export default function Cart() {
 
@@ -17,12 +18,35 @@ export default function Cart() {
                     cart: 
                     [{
                         userId: user._id,
-                        productId: '6324e8dc835cef1b88556a3d'
+                        productId: '6324e8dc835cef1b88556a3d',
+                        amount: 1
                     },
                     {
                         userId: user._id,
-                        productId: '6324e8dc835cef1b88556a3d'
-                    },]
+                        productId: '6324e8dc835cef1b88556a3d',
+                        amount: 3
+                    },
+                    {
+                        userId: user._id,
+                        productId: '6324e8dc835cef1b88556a3d',
+                        amount: 3
+                    },
+                    {
+                        userId: user._id,
+                        productId: '6324e8dc835cef1b88556a3d',
+                        amount: 3
+                    },
+                    {
+                        userId: user._id,
+                        productId: '6324e8dc835cef1b88556a3d',
+                        amount: 3
+                    },
+                    {
+                        userId: user._id,
+                        productId: '6324e8dc835cef1b88556a3d',
+                        amount: 3
+                    },
+                ]
                 });
     }, []);
 
@@ -36,13 +60,14 @@ export default function Cart() {
                         </ ProductsTitle>
                         <>
                             {user?.cart.map((itemCart, index) => 
-                                <CardItemCart key={index} productId={itemCart.productId} />
+                                <CardItemCart key={index} productId={itemCart.productId} productAmount={itemCart.amount} />
                             )}
                         </>
                     </>
                 : <ProductsTitle>
                     Ops! Seu carrinho esta vazio...
                 </ ProductsTitle>}
+                <CartResume/>
             </ProductsContainer>
         </>);
 }
