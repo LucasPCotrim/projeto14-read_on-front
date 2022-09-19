@@ -31,15 +31,11 @@ function CartMenu({ setCartPopUpMenu }) {
           <button onClick={() => navigate('/cart')}>
             <h2>Visualizar Carrinho</h2>
           </button>
-<<<<<<< HEAD
-          <button onClick={() => navigate('/checkout')}>
-=======
           <button
             onClick={() => {
               setCartPopUpMenu(false);
               navigate('/checkout');
             }}>
->>>>>>> main
             <h2>Finalizar Compra</h2>
           </button>
         </div>
