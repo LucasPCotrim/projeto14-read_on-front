@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-/* const BASE_URL = 'https://back-end-readon.herokuapp.com'; */
-const BASE_URL = 'http://localhost:5000'; 
+const BASE_URL = 'https://back-end-readon.herokuapp.com';
+// const BASE_URL = 'http://localhost:5000';
 
 function setToken(token, user, setUser) {
   localStorage.setItem('readOn', JSON.stringify({ token }));
