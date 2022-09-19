@@ -23,15 +23,23 @@ export default function App() {
           <Routes>
             <Route path='/' element={<LoginPage />} />
             <Route path='/sign-up' element={<SignUpPage />} />
-              <Route path='/main' element={
+            <Route
+              path='/main'
+              element={
                 <PrivatePage>
                   <Products />
-                </PrivatePage>} />
-              <Route path='/cart' element={
+                </PrivatePage>
+              }
+            />
+            <Route
+              path='/cart'
+              element={
                 <PrivatePage>
                   <Cart />
-              </PrivatePage>} />
-              <Route
+                </PrivatePage>
+              }
+            />
+            <Route
               path='/checkout'
               element={
                 <PrivatePage>

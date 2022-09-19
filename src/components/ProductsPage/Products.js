@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext} from 'react';
 
-import { getProducts } from '../../services/readOnService.js'; 
+import { getProducts } from '../../services/readOnService.js';
 import ProductsContainer from './ProductsContainer.js';
 import ProductsBox from './ProductsBox.js';
 import ProductsTitle from './ProductsTitle.js';
@@ -22,29 +22,29 @@ export default function Products() {
             .catch(res => console.log(res))
     }, []);
 
-    return (
-        <>
-            {listProducts.length > 0 ? 
-                <>
-                <ProductsContainer>
-                <ProductsTitle>
-                    Recomendado Para Você
-                </ ProductsTitle>
-                <ProductsScrollContainer>
-                    {listProducts.map((book, index) => 
-                        <ProductsBox key={index} {...book}>
-                        </ProductsBox>)}
-                </ ProductsScrollContainer>
-                <ProductsTitle>
-                    Produtos Mais Populares
-                </ ProductsTitle>
-                <ProductsScrollContainer>
-                    {listProducts.map((book, index) => 
-                        <ProductsBox key={index} {...book}>
-                        </ProductsBox>)}
-                </ ProductsScrollContainer>
-                </ ProductsContainer>
-                </> 
-            : 'Livro > Filme.'}
-        </>);
+  return (
+    <>
+        {listProducts.length > 0 ? 
+            <>
+            <ProductsContainer>
+            <ProductsTitle>
+                Recomendado Para Você
+            </ ProductsTitle>
+            <ProductsScrollContainer>
+                {listProducts.map((book, index) => 
+                    <ProductsBox key={index} {...book}>
+                    </ProductsBox>)}
+            </ ProductsScrollContainer>
+            <ProductsTitle>
+                Produtos Mais Populares
+            </ ProductsTitle>
+            <ProductsScrollContainer>
+                {listProducts.map((book, index) => 
+                    <ProductsBox key={index} {...book}>
+                    </ProductsBox>)}
+            </ ProductsScrollContainer>
+            </ ProductsContainer>
+            </> 
+        : 'Ops... Não existe nenhum livro no catálogo!'}
+    </>);
 }
