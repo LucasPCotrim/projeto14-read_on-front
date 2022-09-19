@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
-import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
 import UserContext from '../../contexts/UserContext';
 import { setCart } from '../../services/readOnService.js';
 
@@ -17,57 +16,62 @@ export default function ProductsBox({
   amount,
   genre = 'Police',
 }) {
-  const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate();
+  const { user, setUser, setCartPopUpMenu } = useContext(UserContext);
 
-    const { user, setUser, setCartPopUpMenu } = useContext(UserContext);
-    const navigate = useNavigate();
-
-    function addCart (productId) {
-        let amount = 1;
-        let newCart = {products: [{
-            productId,
-            amount
-        }]};
-        if(user?.cart?.products?.length > 0){
-            const cartProduct = user.cart.products.find(product => product.productId === productId);
-            if(cartProduct){
-                amount += cartProduct.amount;
-                newCart.products = user.cart.products.filter(product => product.productId !== productId);
-                newCart.products.push({...cartProduct, amount})
-            }
-            else{
-                newCart.products = user.cart.products;
-                console.log(newCart)
-                newCart.products.push({
-                    productId,
-                    amount
-                });
-            }
-        }
-        
-        const promise = setCart(newCart);
-            promise
-                .then(res => { 
-                    setUser({ ...user,
-                        cart: newCart});
-                        setCartPopUpMenu(true)})
-                .catch(res => console.log(res))
+  function addCart(productId) {
+    let amount = 1;
+    let newCart = {
+      products: [
+        {
+          productId,
+          amount,
+        },
+      ],
+    };
+    if (user?.cart?.products?.length > 0) {
+      const cartProduct = user.cart.products.find((product) => product.productId === productId);
+      if (cartProduct) {
+        amount += cartProduct.amount;
+        newCart.products = user.cart.products.filter((product) => product.productId !== productId);
+        newCart.products.push({ ...cartProduct, amount });
+      } else {
+        newCart.products = user.cart.products;
+        console.log(newCart);
+        newCart.products.push({
+          productId,
+          amount,
+        });
+      }
     }
 
-    return(
-        <BookBox>
-            <ImageBook src={image} alt={title}/>
-            <h1>{title}</h1>
-            <h2>{subTitulo}</h2>
-                <h3>{genre} {amount > 0 ? <>{amount} un</> : <p>indisponível</p>}</h3>
-            <Price>
-                <p>R$ {(parseInt(price)/100).toFixed(2)}</p>
-            </Price>
-            <ButtonCart onClick={()=> {amount > 0 ? addCart(_id) : alert('Produto Indisponível!')}}>
-                    <FontAwesomeIcon id='icon' icon={faAdd} />
-                </ButtonCart>
-        </BookBox>);
+    const promise = setCart(newCart);
+    promise
+      .then((res) => {
+        setUser({ ...user, cart: newCart });
+        setCartPopUpMenu(true);
+      })
+      .catch((res) => console.log(res));
+  }
+
+  return (
+    <BookBox>
+      <ImageBook src={image} alt={title} />
+      <h1>{title}</h1>
+      <h2>{subTitulo}</h2>
+      <h3>
+        {genre} {amount > 0 ? <>{amount} un</> : <p>indisponível</p>}
+      </h3>
+      <Price>
+        <p>R$ {(parseInt(price) / 100).toFixed(2)}</p>
+      </Price>
+      <ButtonCart
+        onClick={() => {
+          amount > 0 ? addCart(_id) : alert('Produto Indisponível!');
+        }}>
+        <FontAwesomeIcon id='icon' icon={faAdd} />
+      </ButtonCart>
+    </BookBox>
+  );
 }
 
 const BookBox = styled.div`
@@ -150,21 +154,21 @@ const ImageBook = styled.img`
 `;
 
 const ButtonCart = styled.div`
-    position: absolute;
-    color: var(--primary-color);
-    background-color: var(--quaternary-color);
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    right: 8px;
-    bottom: 8px;
-    cursor: pointer;
-    transition: all 0.5s;
-    &:hover {
-      background-color: var(--quaternary-color-alt);
-      transform: scale(1.2);
-    }
+  position: absolute;
+  color: var(--primary-color);
+  background-color: var(--quaternary-color);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 8px;
+  bottom: 8px;
+  cursor: pointer;
+  transition: all 0.5s;
+  &:hover {
+    background-color: var(--quaternary-color-alt);
+    transform: scale(1.2);
+  }
 `;
